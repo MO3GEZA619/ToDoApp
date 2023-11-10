@@ -31,10 +31,32 @@ class ListProvider extends ChangeNotifier {
    notifyListeners();
   }
 
+
   void changeSelectedDate(DateTime newDate) {
     selectedDate = newDate;
     getAllTasksFromFirestore();
     notifyListeners();
+  }
+
+  Future<void> deleteTaskFromFireStore(Task task) async {
+    try {
+      await FirebaseUtils.deleteTaskFromFireStore(task);
+      tasksList.removeWhere((task) => task.id == task.id);
+      notifyListeners();
+    } catch (e) {
+      print('Error deleting task: $e');
+    }
+  }
+  Future<void> updateTaskInFirestore(Task updatedTask) async {
+    try {
+      await FirebaseUtils.updateTaskFromFireStore(updatedTask);
+
+      int index = tasksList.indexWhere((task) => task.id == updatedTask.id);
+      tasksList[index] = updatedTask;
+      notifyListeners();
+    } catch (e) {
+      print('Error updating task: $e');
+    }
   }
 
 }

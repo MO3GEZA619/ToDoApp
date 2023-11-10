@@ -43,7 +43,7 @@ class _AddTaskBottomState extends State<AddTaskBottom> {
                   },
                   decoration: InputDecoration(
                       hintText: 'Enter Task title',
-                      hintStyle: Theme.of(context).textTheme.titleSmall,
+                      hintStyle: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 22),
                       enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(width: 1, color: Colors.black))),
                   validator: (value) {
@@ -63,9 +63,9 @@ class _AddTaskBottomState extends State<AddTaskBottom> {
                   },
                   decoration: InputDecoration(
                     hintText: 'Enter Task description',
-                    hintStyle: Theme.of(context).textTheme.titleSmall,
+                    hintStyle: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 22),
                     enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black)),
+                        borderSide: BorderSide(width: 1, color: Colors.black,)),
                   ),
                   maxLines: 3,
                   validator: (value) {
@@ -83,7 +83,7 @@ class _AddTaskBottomState extends State<AddTaskBottom> {
                   style: Theme.of(context)
                       .textTheme
                       .titleSmall!
-                      .copyWith(color: Colors.grey),
+                      .copyWith(color: Colors.grey,fontSize: 22),
                 ),
               ),
               InkWell(
@@ -98,13 +98,16 @@ class _AddTaskBottomState extends State<AddTaskBottom> {
                     style: Theme.of(context)
                         .textTheme
                         .titleSmall!
-                        .copyWith(color: Colors.grey),
+                        .copyWith(color: Colors.grey,fontSize: 20),
                   ),
                 ),
               ),
-              ElevatedButton( onPressed:(){
+              SizedBox(height: 15,),
+              ElevatedButton(
+                  onPressed:(){
                 AddTask();
-              }, child: Text('Add',
+              }, child:
+              Text('Add',
               style: Theme.of(context).textTheme.titleLarge,)),
             ],
           ))

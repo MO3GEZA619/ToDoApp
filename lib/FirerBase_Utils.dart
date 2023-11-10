@@ -24,6 +24,19 @@ class FirebaseUtils {
     tasks = snapshot.docs.map((doc) => doc.data()).toList();
     return tasks;
   }
+
+  static Future<void> deleteTaskFromFireStore(Task task) async {
+    var taskCollection =  await getTaskCollection();
+    var documentReference = taskCollection.doc(task.id);
+    documentReference.delete();
+
+  }
+  static updateTaskFromFireStore(Task task) {
+    var taskCollection = getTaskCollection();
+    var documentReference = taskCollection.doc(task.id);
+    documentReference.update(task.toFireStore());
+  }
+
   static void updateData(Task task){
     var collection = getTaskCollection();
     var doc=collection.doc(task.id);doc.update(task.toFireStore());

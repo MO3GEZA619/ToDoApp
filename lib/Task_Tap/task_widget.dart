@@ -1,14 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:provider/provider.dart';
 import 'package:to_do_app/Task_Tap/tasks.dart';
 import 'package:to_do_app/app_theme.dart';
 
-class TaskWidgetItem extends StatelessWidget {
+import '../FirerBase_Utils.dart';
+import '../providers/list_provider.dart';
+
+class TaskWidgetItem extends StatefulWidget {
   Task task;
   TaskWidgetItem({required this.task });
+
+  @override
+  State<TaskWidgetItem> createState() => _TaskWidgetItemState();
+}
+
+class _TaskWidgetItemState extends State<TaskWidgetItem> {
   @override
   Widget build(BuildContext context) {
+    var listProvider = Provider.of<ListProvider>(context);
     return Slidable(
       startActionPane: ActionPane(
         extentRatio: 0.25,
@@ -17,6 +28,8 @@ class TaskWidgetItem extends StatelessWidget {
           SlidableAction(
             borderRadius: BorderRadius.only(topLeft:Radius.circular(15),bottomLeft: Radius.circular(15)),
             onPressed: (context){
+              FirebaseUtils.deleteTaskFromFireStore(widget.task);
+              listProvider.getAllTasksFromFirestore();
             },
             backgroundColor: AppTheme.red,
             foregroundColor: AppTheme.white,
@@ -44,7 +57,7 @@ class TaskWidgetItem extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(task.title??'',
+                  child: Text(widget.task.title??'',
                       style: Theme.of(context)
                           .textTheme
                           .titleMedium
@@ -52,7 +65,7 @@ class TaskWidgetItem extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(task.description??'',
+                  child: Text(widget.task.description??'',
                       style: Theme.of(context).textTheme.titleMedium),
                 )
               ],

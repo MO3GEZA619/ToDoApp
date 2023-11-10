@@ -44,7 +44,6 @@ class AppTheme {
           unselectedItemColor: grey,
           backgroundColor: Colors.transparent,
           elevation: 0),
-      bottomAppBarColor:containerColor ,
       floatingActionButtonTheme:
       FloatingActionButtonThemeData(backgroundColor: lightBlue)
       ,textTheme: TextTheme(
